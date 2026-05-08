@@ -1,0 +1,431 @@
+{
+  "generatedAt": "2026-05-08T12:05:26.352Z",
+  "source": {
+    "uiPackage": "packages/ui",
+    "componentsRoot": "packages/ui/src/components"
+  },
+  "usageRules": [
+    "Use components from @frontend-ai-context-kit/ui before creating custom controls.",
+    "Prefer Button for actions, Input and Select for forms, Modal for focused blocking decisions, Tabs for related panels, and Card for grouped content.",
+    "Keep primary Button usage limited to the main action in the current workflow section.",
+    "Always provide labels for Input and Select unless an adjacent visible label already exists.",
+    "Use error props for validation feedback instead of rendering ad hoc red text.",
+    "Use Modal only for focused tasks that require user attention; avoid nesting modals.",
+    "Use Card for repeated summaries and metadata, not as a generic page section wrapper.",
+    "When generating examples, include imports, realistic state handling, and accessible labels."
+  ],
+  "components": [
+    {
+      "name": "Button",
+      "description": "Action component for primary flows, secondary actions, destructive operations, and low-emphasis controls.",
+      "category": "Actions",
+      "tags": [
+        "action",
+        "cta",
+        "loading",
+        "form"
+      ],
+      "importPath": "@frontend-ai-context-kit/ui",
+      "filePath": "packages/ui/src/components/Button/Button.tsx",
+      "storyPath": "packages/ui/src/components/Button/Button.stories.tsx",
+      "props": [
+        {
+          "name": "variant",
+          "type": "'primary' | 'secondary' | 'ghost' | 'danger'",
+          "required": false,
+          "description": "Visual emphasis of the action. Use primary once per workflow section.",
+          "defaultValue": "primary"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Control height and horizontal padding.",
+          "defaultValue": "md"
+        },
+        {
+          "name": "isLoading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a spinner and disables the button while an async action is running.",
+          "defaultValue": "false"
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "description": "Expands the button to fill the width of its parent container.",
+          "defaultValue": "false"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Button content. Prefer concise labels such as \"Save changes\"."
+        }
+      ],
+      "examples": [
+        {
+          "title": "Primary action",
+          "description": "Use a primary button for the main action in a form or focused workflow.",
+          "code": "<Button variant=\"primary\">Save changes</Button>"
+        },
+        {
+          "title": "Loading state",
+          "description": "Set isLoading while an async mutation is pending so duplicate submits are blocked.",
+          "code": "<Button isLoading>Publishing</Button>"
+        },
+        {
+          "title": "Destructive action",
+          "description": "Use the danger variant only for irreversible or high-risk actions.",
+          "code": "<Button variant=\"danger\" size=\"sm\">Delete token</Button>"
+        }
+      ]
+    },
+    {
+      "name": "Card",
+      "description": "Contained surface for grouped content, component summaries, metadata, and small dashboards.",
+      "category": "Surfaces",
+      "tags": [
+        "surface",
+        "summary",
+        "layout",
+        "content"
+      ],
+      "importPath": "@frontend-ai-context-kit/ui",
+      "filePath": "packages/ui/src/components/Card/Card.tsx",
+      "storyPath": "packages/ui/src/components/Card/Card.stories.tsx",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Optional card title rendered in the header."
+        },
+        {
+          "name": "subtitle",
+          "type": "string",
+          "required": false,
+          "description": "Optional supporting text below the title."
+        },
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Header action area, typically a button or compact link."
+        },
+        {
+          "name": "variant",
+          "type": "'outlined' | 'elevated' | 'interactive'",
+          "required": false,
+          "description": "Visual treatment of the card container.",
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "padding",
+          "type": "'compact' | 'comfortable' | 'spacious'",
+          "required": false,
+          "description": "Inner spacing density.",
+          "defaultValue": "comfortable"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Main card content."
+        }
+      ],
+      "examples": [
+        {
+          "title": "Component summary card",
+          "description": "Use Card to group component metadata in documentation and search results.",
+          "code": "<Card title=\"Button\" subtitle=\"Actions - 7 props\">\n  <p>Primary action component with loading and destructive states.</p>\n</Card>"
+        },
+        {
+          "title": "Interactive card",
+          "description": "Use the interactive variant only when the whole card is clickable.",
+          "code": "<Card variant=\"interactive\" title=\"Input\" onClick={openInputDocs}>\n  <p>Text field wrapper with validation messaging.</p>\n</Card>"
+        },
+        {
+          "title": "Card with actions",
+          "description": "Use actions for contextual commands without crowding the main content.",
+          "code": "<Card title=\"Usage rules\" actions={<Button variant=\"ghost\">Copy</Button>}>\n  <p>Prefer existing UI primitives before creating new controls.</p>\n</Card>"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "description": "Text input wrapper with label, description, validation message, and consistent sizing.",
+      "category": "Forms",
+      "tags": [
+        "form",
+        "text-field",
+        "validation",
+        "a11y"
+      ],
+      "importPath": "@frontend-ai-context-kit/ui",
+      "filePath": "packages/ui/src/components/Input/Input.tsx",
+      "storyPath": "packages/ui/src/components/Input/Input.stories.tsx",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "Human-readable field label. It is visually associated with the input."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Supporting copy shown below the control when there is no error."
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "required": false,
+          "description": "Validation message. When present, the input is marked invalid."
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Control height and text sizing.",
+          "defaultValue": "md"
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "description": "Expands the input wrapper and control to fill the parent width.",
+          "defaultValue": "false"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Basic field",
+          "description": "Use label and description to explain what data the user should enter.",
+          "code": "<Input label=\"Project name\" name=\"projectName\" description=\"Shown in dashboards and docs.\" />"
+        },
+        {
+          "title": "Validation state",
+          "description": "Pass error to mark the field invalid and replace helper text with feedback.",
+          "code": "<Input label=\"Repository URL\" error=\"Enter a valid GitHub URL.\" />"
+        },
+        {
+          "title": "Full-width form row",
+          "description": "Use fullWidth when the field sits in a responsive form layout.",
+          "code": "<Input fullWidth label=\"Package name\" placeholder=\"@acme/ui\" />"
+        }
+      ]
+    },
+    {
+      "name": "Modal",
+      "description": "Dialog surface for focused decisions, short forms, confirmations, and contextual details.",
+      "category": "Overlays",
+      "tags": [
+        "dialog",
+        "overlay",
+        "confirmation",
+        "a11y"
+      ],
+      "importPath": "@frontend-ai-context-kit/ui",
+      "filePath": "packages/ui/src/components/Modal/Modal.tsx",
+      "storyPath": "packages/ui/src/components/Modal/Modal.stories.tsx",
+      "props": [
+        {
+          "name": "isOpen",
+          "type": "boolean",
+          "required": true,
+          "description": "Controls whether the dialog is rendered."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Dialog title announced by assistive technologies."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Optional supporting text shown under the title."
+        },
+        {
+          "name": "onClose",
+          "type": "() => void",
+          "required": true,
+          "description": "Called when the user asks to close the modal."
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Dialog body content. Keep it focused and short."
+        },
+        {
+          "name": "footer",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Optional footer actions, usually cancel and confirm buttons."
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Maximum modal width.",
+          "defaultValue": "md"
+        },
+        {
+          "name": "closeOnBackdrop",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether clicking the backdrop should call onClose.",
+          "defaultValue": "true"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Confirmation dialog",
+          "description": "Use Modal for focused confirmation flows with explicit cancel and confirm actions.",
+          "code": "<Modal\n  isOpen={isOpen}\n  title=\"Archive component?\"\n  description=\"This keeps the component documented but hides it from new usage suggestions.\"\n  onClose={() => setIsOpen(false)}\n  footer={<Button variant=\"danger\">Archive</Button>}\n>\n  <p>Archived components remain searchable for migration work.</p>\n</Modal>"
+        },
+        {
+          "title": "Form modal",
+          "description": "Pair Modal with Input and Select for short forms that do not need a full page.",
+          "code": "<Modal isOpen={isOpen} title=\"Create token\" onClose={closeModal}>\n  <Input fullWidth label=\"Token name\" />\n</Modal>"
+        }
+      ]
+    },
+    {
+      "name": "Select",
+      "description": "Native select wrapper for compact choice fields with label, helper copy, and validation state.",
+      "category": "Forms",
+      "tags": [
+        "form",
+        "choice",
+        "dropdown",
+        "native"
+      ],
+      "importPath": "@frontend-ai-context-kit/ui",
+      "filePath": "packages/ui/src/components/Select/Select.tsx",
+      "storyPath": "packages/ui/src/components/Select/Select.stories.tsx",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "Human-readable field label."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "Placeholder option shown before a value is selected."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Supporting text shown below the control when there is no error."
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "required": false,
+          "description": "Validation message. When present, the select is marked invalid."
+        },
+        {
+          "name": "options",
+          "type": "SelectOption[]",
+          "required": true,
+          "description": "Available options. Keep labels short and scannable."
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Control height and text sizing.",
+          "defaultValue": "md"
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "description": "Expands the select wrapper and control to fill the parent width.",
+          "defaultValue": "false"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Basic select",
+          "description": "Use Select for short lists where native keyboard and mobile behavior is enough.",
+          "code": "<Select\n  label=\"Component status\"\n  placeholder=\"Choose status\"\n  options={[\n    { label: 'Stable', value: 'stable' },\n    { label: 'Experimental', value: 'experimental' }\n  ]}\n/>"
+        },
+        {
+          "title": "Validation state",
+          "description": "Pass error to make the invalid state explicit and accessible.",
+          "code": "<Select label=\"Owner team\" error=\"Select a team before publishing.\" options={teams} />"
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "description": "Navigation pattern for switching between related panels without leaving the current page.",
+      "category": "Navigation",
+      "tags": [
+        "navigation",
+        "panels",
+        "controlled",
+        "uncontrolled"
+      ],
+      "importPath": "@frontend-ai-context-kit/ui",
+      "filePath": "packages/ui/src/components/Tabs/Tabs.tsx",
+      "storyPath": "packages/ui/src/components/Tabs/Tabs.stories.tsx",
+      "props": [
+        {
+          "name": "items",
+          "type": "TabItem[]",
+          "required": true,
+          "description": "Collection of tabs and panels."
+        },
+        {
+          "name": "activeId",
+          "type": "string",
+          "required": false,
+          "description": "Controlled active tab id. Use with onChange."
+        },
+        {
+          "name": "defaultActiveId",
+          "type": "string",
+          "required": false,
+          "description": "Initial tab id for uncontrolled usage."
+        },
+        {
+          "name": "onChange",
+          "type": "(tabId: string) => void",
+          "required": false,
+          "description": "Called when the active tab changes."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "required": false,
+          "description": "Accessible label for the tab list.",
+          "defaultValue": "Tabs"
+        }
+      ],
+      "examples": [
+        {
+          "title": "Documentation tabs",
+          "description": "Use Tabs when component docs need API, examples, and rules in one focused view.",
+          "code": "<Tabs\n  items={[\n    { id: 'api', label: 'API', content: <PropsTable /> },\n    { id: 'examples', label: 'Examples', content: <Examples /> },\n    { id: 'rules', label: 'Usage rules', content: <UsageRules /> }\n  ]}\n/>"
+        },
+        {
+          "title": "Controlled tab state",
+          "description": "Use activeId and onChange when the selected tab is stored in URL or app state.",
+          "code": "<Tabs activeId={tab} onChange={setTab} items={items} ariaLabel=\"Component docs\" />"
+        }
+      ]
+    }
+  ]
+}
