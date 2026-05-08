@@ -6,8 +6,8 @@ const meta = {
   component: Input,
   tags: ['autodocs'],
   args: {
-    label: 'Project name',
-    description: 'Shown in dashboards and generated docs.',
+    label: 'Название проекта',
+    description: 'Показывается в дашбордах и сгенерированной документации.',
     placeholder: 'Frontend AI Context Kit',
   },
   argTypes: {
@@ -25,7 +25,7 @@ export const Default: Story = {};
 
 export const WithError: Story = {
   args: {
-    error: 'Project name is required.',
+    error: 'Название проекта обязательно.',
   },
 };
 
@@ -34,4 +34,3 @@ export const Large: Story = {
     size: 'lg',
   },
 };
-

@@ -1,32 +1,40 @@
 # Frontend AI Context Kit
 
-Frontend AI Context Kit is a pet project that demonstrates how a frontend team can expose its
-component system to AI assistants in a structured and maintainable way.
+Frontend AI Context Kit показывает, как может выглядеть AI-инфраструктура для современной
+frontend-команды. Это не еще одна витрина компонентов, а связка из UI-библиотеки, документации,
+индексатора и MCP-сервера, который умеет отдавать ассистенту понятный контекст о вашем интерфейсе.
 
-The repository connects a React UI library, Storybook examples, a TypeScript documentation
-indexer, an MCP-compatible context server, and a web UI for exploring component documentation.
-It is designed to be understandable in a resume review and concrete enough for a technical
-interview discussion.
+Идея простая: если AI пишет код для продукта, он должен знать не только React, но и правила вашей
+команды. Какие компоненты уже есть. Какие props у них поддерживаются. Как выглядят хорошие
+примеры. Где нельзя изобретать новый control. Этот проект собирает такие знания в одном месте и
+показывает, как их можно передать человеку и AI-ассистенту.
 
-## What It Shows
+## Что внутри
 
-- A typed React component library with documented props and examples.
-- Storybook documentation for visual component review.
-- A `ts-morph` powered indexer that converts TypeScript component APIs into JSON context.
-- An MCP adapter that exposes tools, resources, and prompts for AI assistants.
-- A Vite web interface for searching components, reading prop APIs, and reviewing usage rules.
-- CI checks for install, lint, typecheck, index generation, and build.
+- Небольшая React UI-библиотека с типами, JSDoc и Storybook stories.
+- Индексатор на `ts-morph`, который читает компоненты и собирает `component-index.json`.
+- MCP-совместимый server adapter с tools, resources и prompts для AI-ассистента.
+- Web-интерфейс, где можно быстро найти компонент, посмотреть API и взять пример.
+- Документация и CI, чтобы проект выглядел как законченная platform-задача, а не набор файлов.
 
-## Repository Layout
+## Зачем это нужно
+
+AI-ассистент часто ошибается не потому, что плохо знает React, а потому что не знает ваш проект.
+Он может придумать несуществующий prop, собрать форму из случайных div или проигнорировать
+правила дизайн-системы. Frontend AI Context Kit решает эту проблему через явный слой контекста:
+компоненты, примеры и правила превращаются в структурированные данные, которые можно читать,
+искать и отдавать через MCP.
+
+## Структура
 
 ```txt
 apps/
-  web/            Vite app for browsing the component index
-  mcp-server/     MCP-compatible context server adapter
+  web/            Интерфейс для просмотра компонентного индекса
+  mcp-server/     MCP-совместимый сервер контекста
 packages/
-  ui/             React UI component library and Storybook stories
-  docs-indexer/   CLI that generates component-index.json
-  prompt-rules/   Shared AI usage rules and prompt templates
+  ui/             React-компоненты, examples и Storybook stories
+  docs-indexer/   CLI для генерации component-index.json
+  prompt-rules/   Правила и шаблоны промптов для AI
 docs/
   architecture.md
   mcp.md
@@ -34,7 +42,7 @@ docs/
   prompts.md
 ```
 
-## Quick Start
+## Быстрый запуск
 
 ```bash
 corepack enable
@@ -44,46 +52,44 @@ pnpm generate:index
 pnpm dev
 ```
 
-Open the Vite URL printed by `pnpm dev`.
+После запуска откройте URL, который выведет Vite.
 
-## Commands
+## Основные команды
 
 ```bash
-pnpm dev             # Start the web app
-pnpm storybook       # Start Storybook for packages/ui
-pnpm build           # Generate index and build all packages/apps
-pnpm typecheck       # Run TypeScript checks
-pnpm lint            # Run ESLint
-pnpm generate:index  # Regenerate MCP and web component indexes
+pnpm dev             # Запустить web-интерфейс
+pnpm storybook       # Открыть Storybook для UI-библиотеки
+pnpm build           # Сгенерировать индекс и собрать workspace
+pnpm typecheck       # Проверить TypeScript
+pnpm lint            # Запустить ESLint
+pnpm generate:index  # Обновить component-index.json для web и MCP
 ```
 
-## How The Context Flow Works
+## Как все связано
 
-1. Components in `packages/ui/src/components` define props with TypeScript interfaces and JSDoc.
-2. Examples live next to each component in `*.examples.tsx`.
-3. `packages/docs-indexer` reads component source with `ts-morph`.
-4. The generated JSON is written to:
-   - `apps/mcp-server/data/component-index.json`
-   - `apps/web/public/component-index.json`
-5. The MCP adapter exposes this data through tools, resources, and prompts.
-6. The web app reads the public JSON and renders searchable documentation.
+1. Компоненты в `packages/ui` описывают публичный API через TypeScript interfaces и JSDoc.
+2. Рядом лежат короткие examples, которые показывают нормальное использование компонента.
+3. `packages/docs-indexer` читает исходники через `ts-morph` и валидирует результат через Zod.
+4. Индекс сохраняется в `apps/web/public` и `apps/mcp-server/data`.
+5. Web app показывает этот индекс человеку.
+6. MCP adapter отдает тот же индекс AI-ассистенту через tools, resources и prompts.
 
-## MCP SDK Integration
+## MCP слой
 
-`apps/mcp-server` currently uses a small adapter layer with MCP-shaped tools, resources, and
-prompts. This keeps the project installable even when the official SDK API changes.
+В `apps/mcp-server` уже есть транспорт-независимая логика:
 
-To wire it to the real MCP SDK:
+- `search_components` помогает найти подходящий компонент по задаче.
+- `get_component_api` возвращает props, типы и описания.
+- `get_component_examples` отдает готовые примеры.
+- `get_usage_rules` возвращает правила, которые удерживают AI в рамках UI-библиотеки.
 
-1. Add `@modelcontextprotocol/sdk` to `apps/mcp-server`.
-2. Create a transport entrypoint, for example `src/stdio.ts`.
-3. Register the handlers from `createContextKitServer(loadComponentIndex())`.
-4. Use `StdioServerTransport` or the current SDK transport recommended by the MCP docs.
+Сейчас это adapter layer без жесткой привязки к конкретной версии SDK. Чтобы подключить настоящий
+MCP transport, добавьте `@modelcontextprotocol/sdk`, создайте entrypoint вроде `src/stdio.ts` и
+зарегистрируйте handlers из `createContextKitServer(loadComponentIndex())`.
 
-The business logic is intentionally isolated in `src/mcpAdapter.ts` so only the transport layer
-needs to change.
+## Компоненты
 
-## Included UI Components
+В демо-библиотеке есть шесть базовых компонентов:
 
 - `Button`
 - `Input`
@@ -92,28 +98,23 @@ needs to change.
 - `Tabs`
 - `Card`
 
-Each component includes:
+У каждого компонента есть typed props, JSDoc, несколько состояний или вариантов, examples и
+Storybook stories. Этого достаточно, чтобы показать полный путь от UI-кода до AI-контекста без
+лишнего boilerplate.
 
-- typed props interface
-- JSDoc descriptions
-- variants, sizes, or states where relevant
-- examples
-- Storybook stories
+## Что обсудить на интервью
 
-## Good Interview Talking Points
+- Как превратить компонентную библиотеку в источник AI-контекста.
+- Почему TypeScript и JSDoc удобны как source of truth для component API.
+- Чем MCP tools отличаются от resources и prompts.
+- Как не дать AI-ассистенту изобретать несуществующие props.
+- Как такой подход можно развить во внутреннюю frontend platform.
 
-- Why AI assistants need structured component context instead of only source-code search.
-- How docs can be generated from TypeScript as a source of truth.
-- How MCP tools differ from resources and prompts.
-- How to keep AI-generated UI aligned with a design system.
-- Where this project could grow into a production internal platform.
+## Что можно развить дальше
 
-## Possible Improvements
-
-- Add a real MCP SDK transport and JSON-RPC smoke tests.
-- Parse Storybook CSF stories directly in addition to `*.examples.tsx`.
-- Add Vitest coverage for the indexer and MCP handlers.
-- Publish Storybook as a static artifact in CI.
-- Track component stability, owner team, accessibility notes, and migration status.
-- Add a Figma or design-token source to enrich the AI context.
-
+- Подключить настоящий MCP SDK transport и JSON-RPC smoke tests.
+- Парсить Storybook CSF stories напрямую, а не только `*.examples.tsx`.
+- Добавить Vitest для indexer и MCP handlers.
+- Публиковать Storybook и web app из CI.
+- Добавить owner team, stability, accessibility notes и migration status.
+- Подмешать design tokens или Figma metadata в общий AI-контекст.

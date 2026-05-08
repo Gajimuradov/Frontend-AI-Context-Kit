@@ -10,17 +10,17 @@ const meta = {
       {
         id: 'api',
         label: 'API',
-        content: 'Props, defaults, and usage constraints for the selected component.',
+        content: 'Пропсы, значения по умолчанию и ограничения выбранного компонента.',
       },
       {
         id: 'examples',
-        label: 'Examples',
-        content: 'Copy-ready examples from Storybook and hand-authored documentation.',
+        label: 'Примеры',
+        content: 'Готовые примеры из Storybook и ручной документации.',
       },
       {
         id: 'rules',
-        label: 'Rules',
-        content: 'AI-facing constraints that keep generated UI consistent.',
+        label: 'Правила',
+        content: 'Ограничения для AI, которые сохраняют консистентность UI.',
       },
     ],
   },
@@ -34,10 +34,9 @@ export const Default: Story = {};
 export const WithDisabledTab: Story = {
   args: {
     items: [
-      { id: 'overview', label: 'Overview', content: 'Component summary.' },
-      { id: 'api', label: 'API', content: 'Props and types.' },
-      { id: 'migration', label: 'Migration', content: 'Migration guide.', disabled: true },
+      { id: 'overview', label: 'Обзор', content: 'Краткое описание компонента.' },
+      { id: 'api', label: 'API', content: 'Пропсы и типы.' },
+      { id: 'migration', label: 'Миграция', content: 'Гайд по миграции.', disabled: true },
     ],
   },
 };
-

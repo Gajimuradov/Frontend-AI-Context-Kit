@@ -1,6 +1,51 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button, Card, Input, Tabs } from '@frontend-ai-context-kit/ui';
+import { Card, Input, Tabs } from '@frontend-ai-context-kit/ui';
 import type { ComponentIndex, IndexedComponent } from './types';
+
+function formatComponentCount(count: number) {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+
+  if (lastDigit === 1 && lastTwoDigits !== 11) {
+    return `${count} компонент`;
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 12 || lastTwoDigits > 14)) {
+    return `${count} компонента`;
+  }
+
+  return `${count} компонентов`;
+}
+
+function formatPropCount(count: number) {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+
+  if (lastDigit === 1 && lastTwoDigits !== 11) {
+    return `${count} свойство`;
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 12 || lastTwoDigits > 14)) {
+    return `${count} свойства`;
+  }
+
+  return `${count} свойств`;
+}
+
+function formatExampleCount(count: number) {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+
+  if (lastDigit === 1 && lastTwoDigits !== 11) {
+    return `${count} пример`;
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 12 || lastTwoDigits > 14)) {
+    return `${count} примера`;
+  }
+
+  return `${count} примеров`;
+}
 
 function matchesQuery(component: IndexedComponent, query: string) {
   const normalizedQuery = query.trim().toLowerCase();
@@ -27,11 +72,11 @@ function PropsTable({ component }: { component: IndexedComponent }) {
       <table>
         <thead>
           <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Required</th>
-            <th>Default</th>
-            <th>Description</th>
+            <th>Свойство</th>
+            <th>Тип</th>
+            <th>Обязательный</th>
+            <th>По умолчанию</th>
+            <th>Описание</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +88,7 @@ function PropsTable({ component }: { component: IndexedComponent }) {
               <td>
                 <code>{prop.type}</code>
               </td>
-              <td>{prop.required ? 'Yes' : 'No'}</td>
+              <td>{prop.required ? 'Да' : 'Нет'}</td>
               <td>{prop.defaultValue ? <code>{prop.defaultValue}</code> : '-'}</td>
               <td>{prop.description || '-'}</td>
             </tr>
@@ -59,17 +104,17 @@ function ComponentDetail({ component }: { component: IndexedComponent }) {
     <div className="detailStack">
       <Card
         title={component.name}
-        subtitle={`${component.category} - ${component.props.length} props - ${component.examples.length} examples`}
-        actions={<Button variant="secondary">Storybook</Button>}
+        subtitle={`${component.category} - ${formatPropCount(component.props.length)} - ${formatExampleCount(component.examples.length)}`}
+        actions={<span className="componentBadge">UI API</span>}
       >
         <p className="componentDescription">{component.description}</p>
         <div className="metaGrid">
-          <span>Import</span>
+          <span>Импорт</span>
           <code>import {'{'} {component.name} {'}'} from '{component.importPath}';</code>
-          <span>Source</span>
+          <span>Исходник</span>
           <code>{component.filePath}</code>
           <span>Stories</span>
-          <code>{component.storyPath ?? 'Not indexed'}</code>
+          <code>{component.storyPath ?? 'Не найдено в индексе'}</code>
         </div>
         <div className="tagRow">
           {component.tags.map((tag) => (
@@ -81,16 +126,16 @@ function ComponentDetail({ component }: { component: IndexedComponent }) {
       </Card>
 
       <Tabs
-        ariaLabel={`${component.name} documentation`}
+        ariaLabel={`Документация компонента ${component.name}`}
         items={[
           {
             id: 'api',
-            label: 'Prop API',
+            label: 'API компонента',
             content: <PropsTable component={component} />,
           },
           {
             id: 'examples',
-            label: 'Examples',
+            label: 'Примеры',
             content: (
               <div className="examplesGrid">
                 {component.examples.map((example) => (
@@ -120,7 +165,7 @@ export function App() {
     fetch('/component-index.json')
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Failed to load component-index.json: ${response.status}`);
+          throw new Error(`Не удалось загрузить component-index.json: ${response.status}`);
         }
 
         return response.json() as Promise<ComponentIndex>;
@@ -150,15 +195,15 @@ export function App() {
     <main className="appShell">
       <header className="topBar">
         <div>
-          <p className="eyebrow">AI infrastructure demo</p>
+          <p className="eyebrow">AI-контекст для frontend-команд</p>
           <h1>Frontend AI Context Kit</h1>
           <p className="intro">
-            Component metadata, examples, prompt rules, and MCP capabilities in one frontend
-            platform workspace.
+            Живой каталог UI-компонентов, который одинаково полезен разработчику и
+            AI-ассистенту: здесь есть API, примеры, правила и готовый MCP-слой для контекста.
           </p>
         </div>
         <div className="statusPill">
-          {index ? `${index.components.length} components indexed` : 'Loading index'}
+          {index ? `${formatComponentCount(index.components.length)} готовы для AI` : 'Загружаем каталог'}
         </div>
       </header>
 
@@ -166,18 +211,24 @@ export function App() {
         <aside className="sidebar">
           <Input
             fullWidth
-            label="Search components"
+            label="Найти компонент"
             name="component-search"
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Button, form, dialog..."
+            placeholder="Например: кнопка, форма, диалог"
             value={query}
           />
 
           {error ? <p className="errorText">{error}</p> : null}
 
+          <div className="listHeader">
+            <span>Каталог</span>
+            <small>{formatComponentCount(filteredComponents.length)}</small>
+          </div>
+
           <div className="componentList">
             {filteredComponents.map((component) => (
               <button
+                aria-current={component.name === selectedComponent?.name ? 'true' : undefined}
                 className={component.name === selectedComponent?.name ? 'listItem active' : 'listItem'}
                 key={component.name}
                 onClick={() => setSelectedName(component.name)}
@@ -194,25 +245,31 @@ export function App() {
           {selectedComponent ? (
             <ComponentDetail component={selectedComponent} />
           ) : (
-            <Card title="No components found">
-              <p>Try another query or regenerate the component index.</p>
+            <Card title="Компоненты не найдены">
+              <p className="componentDescription">
+                Попробуйте описать задачу другими словами или обновите индекс командой
+                pnpm generate:index.
+              </p>
             </Card>
           )}
         </section>
 
         <aside className="contextPane">
-          <Card title="Usage rules" subtitle="Returned by get_usage_rules and ui://rules/frontend">
+          <Card
+            title="Как пользоваться библиотекой"
+            subtitle="Эти же правила получает AI-ассистент через get_usage_rules"
+          >
             <ul className="rulesList">
               {index?.usageRules.slice(0, 6).map((rule) => <li key={rule}>{rule}</li>)}
             </ul>
           </Card>
 
-          <Card title="How AI assistant uses this context">
+          <Card title="Что делает AI с этим контекстом">
             <ol className="flowList">
-              <li>Searches components by intent with search_components.</li>
-              <li>Reads prop API before generating JSX.</li>
-              <li>Copies examples and adapts only the business data.</li>
-              <li>Applies usage rules during review and refactoring.</li>
+              <li>Находит подходящий компонент по смыслу задачи.</li>
+              <li>Проверяет реальные свойства перед тем, как писать JSX.</li>
+              <li>Берет готовый пример как основу и адаптирует его под продуктовый сценарий.</li>
+              <li>Использует правила библиотеки, когда ревьюит или переписывает код.</li>
             </ol>
           </Card>
         </aside>

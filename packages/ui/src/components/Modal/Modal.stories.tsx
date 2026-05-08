@@ -8,11 +8,11 @@ const meta = {
   component: Modal,
   tags: ['autodocs'],
   args: {
-    children: 'Archived components remain searchable for migration and compatibility work.',
+    children: 'Архивные компоненты остаются доступными для миграций и совместимости.',
     isOpen: true,
     onClose: () => undefined,
-    title: 'Archive component?',
-    description: 'This keeps documentation available while hiding it from new usage suggestions.',
+    title: 'Архивировать компонент?',
+    description: 'Документация останется доступной, но компонент исчезнет из новых рекомендаций.',
     size: 'md',
     closeOnBackdrop: true,
   },
@@ -32,23 +32,23 @@ function ModalPlayground(args: ModalProps) {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>Open modal</Button>
+      <Button onClick={() => setIsOpen(true)}>Открыть окно</Button>
       <Modal
         {...args}
         footer={
           <>
             <Button variant="secondary" onClick={() => setIsOpen(false)}>
-              Cancel
+                Отмена
             </Button>
             <Button variant="danger" onClick={() => setIsOpen(false)}>
-              Archive
+                Архивировать
             </Button>
           </>
         }
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <p>Archived components remain searchable for migration and compatibility work.</p>
+        <p>Архивные компоненты остаются доступными для миграций и совместимости.</p>
       </Modal>
     </>
   );

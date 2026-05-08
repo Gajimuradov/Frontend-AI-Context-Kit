@@ -8,8 +8,8 @@ const meta = {
   tags: ['autodocs'],
   args: {
     title: 'Button',
-    subtitle: 'Actions - 7 props',
-    children: 'Primary action component with loading and destructive states.',
+    subtitle: 'Действия - 7 пропсов',
+    children: 'Основная кнопка с загрузкой и опасным состоянием.',
   },
   argTypes: {
     variant: {
@@ -36,6 +36,6 @@ export const Elevated: Story = {
 
 export const WithActions: Story = {
   args: {
-    actions: <Button variant="ghost">Open</Button>,
+    actions: <Button variant="ghost">Открыть</Button>,
   },
 };

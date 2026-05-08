@@ -2,24 +2,24 @@ import type { ComponentExample } from '../../types';
 
 export const cardExamples: ComponentExample[] = [
   {
-    title: 'Component summary card',
-    description: 'Use Card to group component metadata in documentation and search results.',
-    code: `<Card title="Button" subtitle="Actions - 7 props">
-  <p>Primary action component with loading and destructive states.</p>
+    title: 'Карточка компонента',
+    description: 'Карточка помогает быстро понять, что это за компонент и зачем он нужен.',
+    code: `<Card title="Button" subtitle="Действия - 7 пропсов">
+  <p>Основная кнопка с загрузкой и опасным состоянием.</p>
 </Card>`,
   },
   {
-    title: 'Interactive card',
-    description: 'Use the interactive variant only when the whole card is clickable.',
+    title: 'Интерактивная карточка',
+    description: 'Interactive подходит, когда вся карточка ведет к одному понятному действию.',
     code: `<Card variant="interactive" title="Input" onClick={openInputDocs}>
-  <p>Text field wrapper with validation messaging.</p>
+  <p>Поле ввода с сообщением валидации.</p>
 </Card>`,
   },
   {
-    title: 'Card with actions',
-    description: 'Use actions for contextual commands without crowding the main content.',
-    code: `<Card title="Usage rules" actions={<Button variant="ghost">Copy</Button>}>
-  <p>Prefer existing UI primitives before creating new controls.</p>
+    title: 'Карточка с действиями',
+    description: 'Actions держат вторичные команды рядом, но не спорят с основным содержанием.',
+    code: `<Card title="Правила использования" actions={<Button variant="ghost">Скопировать</Button>}>
+  <p>Сначала используйте существующие UI-примитивы.</p>
 </Card>`,
   },
 ];

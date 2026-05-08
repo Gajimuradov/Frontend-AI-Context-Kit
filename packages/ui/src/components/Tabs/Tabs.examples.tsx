@@ -2,20 +2,19 @@ import type { ComponentExample } from '../../types';
 
 export const tabsExamples: ComponentExample[] = [
   {
-    title: 'Documentation tabs',
-    description: 'Use Tabs when component docs need API, examples, and rules in one focused view.',
+    title: 'Вкладки документации',
+    description: 'API, примеры и правила удобно держать рядом, но не смешивать в одну длинную простыню.',
     code: `<Tabs
   items={[
     { id: 'api', label: 'API', content: <PropsTable /> },
-    { id: 'examples', label: 'Examples', content: <Examples /> },
-    { id: 'rules', label: 'Usage rules', content: <UsageRules /> }
+    { id: 'examples', label: 'Примеры', content: <Examples /> },
+    { id: 'rules', label: 'Правила', content: <UsageRules /> }
   ]}
 />`,
   },
   {
-    title: 'Controlled tab state',
-    description: 'Use activeId and onChange when the selected tab is stored in URL or app state.',
-    code: `<Tabs activeId={tab} onChange={setTab} items={items} ariaLabel="Component docs" />`,
+    title: 'Controlled-состояние',
+    description: 'Controlled-режим нужен, когда выбранная вкладка должна жить в URL или общем состоянии приложения.',
+    code: `<Tabs activeId={tab} onChange={setTab} items={items} ariaLabel="Документация компонента" />`,
   },
 ];
-

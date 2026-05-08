@@ -1,22 +1,21 @@
 export const frontendUsageRules = [
-  'Use components from @frontend-ai-context-kit/ui before creating custom controls.',
-  'Prefer Button for actions, Input and Select for forms, Modal for focused blocking decisions, Tabs for related panels, and Card for grouped content.',
-  'Keep primary Button usage limited to the main action in the current workflow section.',
-  'Always provide labels for Input and Select unless an adjacent visible label already exists.',
-  'Use error props for validation feedback instead of rendering ad hoc red text.',
-  'Use Modal only for focused tasks that require user attention; avoid nesting modals.',
-  'Use Card for repeated summaries and metadata, not as a generic page section wrapper.',
-  'When generating examples, include imports, realistic state handling, and accessible labels.',
+  'Сначала проверьте, есть ли нужный компонент в @frontend-ai-context-kit/ui. Новый control стоит создавать только тогда, когда готового паттерна действительно не хватает.',
+  'Для действий используйте Button, для полей формы - Input и Select, для важных решений - Modal, для связанных разделов - Tabs, для группировки контента - Card.',
+  'Оставляйте variant="primary" для главного действия на экране. Так интерфейс не превращается в набор одинаково громких кнопок.',
+  'У Input и Select должна быть понятная подпись. Если пользователь не понимает, что вводить, AI-сгенерированный экран уже проиграл.',
+  'Ошибки показывайте через prop error. Это сохраняет единый вид, доступность и предсказуемое поведение форм.',
+  'Modal нужен для коротких сфокусированных задач. Если внутри начинается целый сценарий, лучше сделать отдельный экран.',
+  'Card подходит для повторяемых блоков, summary и метаданных. Не используйте ее как декоративную рамку вокруг каждой секции.',
+  'В примерах для AI всегда показывайте imports, реалистичное состояние и текст, похожий на настоящий продукт.',
 ] as const;
 
 export const promptTemplates = {
-  createComponentUsageExample: `Create a React example using the selected UI component.
-Include imports from @frontend-ai-context-kit/ui, realistic props, and a short explanation of why this component fits the use case.`,
-  reviewComponentUsage: `Review the provided React snippet against the UI library rules.
-Call out missing labels, incorrect variants, unnecessary custom controls, and accessibility risks.`,
-  generateFormWithUiLibrary: `Generate a compact React form using @frontend-ai-context-kit/ui.
-Use Input, Select, Button, and Card where appropriate. Include validation copy and loading state handling.`,
+  createComponentUsageExample: `Создай React-пример с выбранным UI-компонентом.
+Добавь imports из @frontend-ai-context-kit/ui, реалистичные props и короткое объяснение, почему компонент подходит.`,
+  reviewComponentUsage: `Проверь React-фрагмент по правилам UI-библиотеки.
+Отметь пропущенные label, неверные variants, лишние кастомные контролы и accessibility-риски.`,
+  generateFormWithUiLibrary: `Сгенерируй компактную React-форму на @frontend-ai-context-kit/ui.
+Используй Input, Select, Button и Card там, где это уместно. Добавь тексты валидации и loading state.`,
 } as const;
 
 export type PromptTemplateName = keyof typeof promptTemplates;
-

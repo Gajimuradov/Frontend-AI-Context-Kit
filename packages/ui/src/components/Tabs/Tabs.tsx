@@ -6,35 +6,35 @@ import { cx } from '../../utils';
 export const tabsMeta: ComponentMeta = {
   name: 'Tabs',
   description:
-    'Navigation pattern for switching between related panels without leaving the current page.',
-  category: 'Navigation',
-  tags: ['navigation', 'panels', 'controlled', 'uncontrolled'],
+    'Tabs разделяет близкие по смыслу материалы на вкладки, чтобы пользователь оставался в одном контексте и не терялся между страницами.',
+  category: 'Навигация',
+  tags: ['навигация', 'панели', 'controlled', 'uncontrolled'],
 };
 
 export interface TabItem {
-  /** Stable tab identifier. Use semantic ids such as "api" or "examples". */
+  /** Стабильный идентификатор вкладки. Используйте семантичные id вроде "api". */
   id: string;
-  /** Text shown in the tab trigger. */
+  /** Текст на переключателе вкладки. */
   label: string;
-  /** Panel content rendered when the tab is active. */
+  /** Контент панели, который рендерится при активной вкладке. */
   content: ReactNode;
-  /** Prevents the tab from being selected. */
+  /** Запрещает выбрать вкладку. */
   disabled?: boolean;
 }
 
 /**
- * Props for the Tabs component.
+ * Пропсы компонента Tabs.
  */
 export interface TabsProps {
-  /** Collection of tabs and panels. */
+  /** Набор вкладок и панелей. */
   items: TabItem[];
-  /** Controlled active tab id. Use with onChange. */
+  /** Controlled id активной вкладки. Используйте вместе с onChange. */
   activeId?: string;
-  /** Initial tab id for uncontrolled usage. */
+  /** Начальная вкладка для uncontrolled-сценария. */
   defaultActiveId?: string;
-  /** Called when the active tab changes. */
+  /** Вызывается при смене активной вкладки. */
   onChange?: (tabId: string) => void;
-  /** Accessible label for the tab list. */
+  /** Доступная подпись списка вкладок. */
   ariaLabel?: string;
 }
 
@@ -88,4 +88,3 @@ export function Tabs({ items, activeId, defaultActiveId, onChange, ariaLabel = '
     </div>
   );
 }
-

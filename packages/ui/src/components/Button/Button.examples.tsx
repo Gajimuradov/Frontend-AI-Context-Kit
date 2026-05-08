@@ -2,19 +2,18 @@ import type { ComponentExample } from '../../types';
 
 export const buttonExamples: ComponentExample[] = [
   {
-    title: 'Primary action',
-    description: 'Use a primary button for the main action in a form or focused workflow.',
-    code: `<Button variant="primary">Save changes</Button>`,
+    title: 'Основное действие',
+    description: 'Primary хорошо работает там, где у пользователя есть один очевидный следующий шаг.',
+    code: `<Button variant="primary">Сохранить изменения</Button>`,
   },
   {
-    title: 'Loading state',
-    description: 'Set isLoading while an async mutation is pending so duplicate submits are blocked.',
-    code: `<Button isLoading>Publishing</Button>`,
+    title: 'Состояние загрузки',
+    description: 'Покажите загрузку, когда действие уже выполняется и повторный клик может навредить.',
+    code: `<Button isLoading>Публикуем</Button>`,
   },
   {
-    title: 'Destructive action',
-    description: 'Use the danger variant only for irreversible or high-risk actions.',
-    code: `<Button variant="danger" size="sm">Delete token</Button>`,
+    title: 'Опасное действие',
+    description: 'Danger нужен для действий, после которых пользователю сложно вернуться назад.',
+    code: `<Button variant="danger" size="sm">Удалить токен</Button>`,
   },
 ];
-

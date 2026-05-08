@@ -6,7 +6,7 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   args: {
-    children: 'Save changes',
+    children: 'Сохранить изменения',
   },
   argTypes: {
     variant: {
@@ -38,14 +38,13 @@ export const Secondary: Story = {
 export const Loading: Story = {
   args: {
     isLoading: true,
-    children: 'Publishing',
+    children: 'Публикуем',
   },
 };
 
 export const Danger: Story = {
   args: {
     variant: 'danger',
-    children: 'Delete token',
+    children: 'Удалить токен',
   },
 };
-

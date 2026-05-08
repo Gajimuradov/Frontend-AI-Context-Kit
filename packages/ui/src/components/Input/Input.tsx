@@ -5,24 +5,24 @@ import { cx } from '../../utils';
 export const inputMeta: ComponentMeta = {
   name: 'Input',
   description:
-    'Text input wrapper with label, description, validation message, and consistent sizing.',
-  category: 'Forms',
-  tags: ['form', 'text-field', 'validation', 'a11y'],
+    'Input делает текстовое поле понятным: рядом есть подпись, подсказка и место для ошибки, если пользователь ввел что-то не так.',
+  category: 'Формы',
+  tags: ['форма', 'текстовое поле', 'валидация', 'доступность'],
 };
 
 /**
- * Props for the Input component.
+ * Пропсы компонента Input.
  */
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  /** Human-readable field label. It is visually associated with the input. */
+  /** Видимая подпись поля. Она визуально связана с input. */
   label?: string;
-  /** Supporting copy shown below the control when there is no error. */
+  /** Подсказка под контролом, если ошибки нет. */
   description?: string;
-  /** Validation message. When present, the input is marked invalid. */
+  /** Сообщение валидации. При наличии поле помечается как невалидное. */
   error?: string;
-  /** Control height and text sizing. */
+  /** Высота контрола и размер текста. */
   size?: 'sm' | 'md' | 'lg';
-  /** Expands the input wrapper and control to fill the parent width. */
+  /** Растягивает обертку и control на всю ширину родителя. */
   fullWidth?: boolean;
 }
 
@@ -67,4 +67,3 @@ export function Input({
     </label>
   );
 }
-

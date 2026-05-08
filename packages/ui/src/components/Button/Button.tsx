@@ -5,24 +5,24 @@ import { cx } from '../../utils';
 export const buttonMeta: ComponentMeta = {
   name: 'Button',
   description:
-    'Action component for primary flows, secondary actions, destructive operations, and low-emphasis controls.',
-  category: 'Actions',
-  tags: ['action', 'cta', 'loading', 'form'],
+    'Кнопка помогает пользователю сделать следующий шаг: сохранить форму, запустить действие, подтвердить рискованную операцию или выбрать спокойный вторичный сценарий.',
+  category: 'Действия',
+  tags: ['действие', 'cta', 'загрузка', 'форма'],
 };
 
 /**
- * Props for the Button component.
+ * Пропсы компонента Button.
  */
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
-  /** Visual emphasis of the action. Use primary once per workflow section. */
+  /** Визуальный акцент действия. Используйте primary только для главного действия в секции. */
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-  /** Control height and horizontal padding. */
+  /** Высота контрола и горизонтальные отступы. */
   size?: 'sm' | 'md' | 'lg';
-  /** Shows a spinner and disables the button while an async action is running. */
+  /** Показывает спиннер и блокирует кнопку на время асинхронного действия. */
   isLoading?: boolean;
-  /** Expands the button to fill the width of its parent container. */
+  /** Растягивает кнопку на всю ширину родительского контейнера. */
   fullWidth?: boolean;
-  /** Button content. Prefer concise labels such as "Save changes". */
+  /** Содержимое кнопки. Используйте короткие подписи вроде "Сохранить". */
   children: ReactNode;
 }
 
@@ -55,4 +55,3 @@ export function Button({
     </button>
   );
 }
-

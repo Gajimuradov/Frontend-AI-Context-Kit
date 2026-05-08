@@ -2,21 +2,20 @@ import type { ComponentExample } from '../../types';
 
 export const selectExamples: ComponentExample[] = [
   {
-    title: 'Basic select',
-    description: 'Use Select for short lists where native keyboard and mobile behavior is enough.',
+    title: 'Базовый выбор',
+    description: 'Если вариантов немного и они понятны без поиска, нативный select будет самым простым решением.',
     code: `<Select
-  label="Component status"
-  placeholder="Choose status"
+  label="Статус компонента"
+  placeholder="Выберите статус"
   options={[
-    { label: 'Stable', value: 'stable' },
-    { label: 'Experimental', value: 'experimental' }
+    { label: 'Стабильный', value: 'stable' },
+    { label: 'Экспериментальный', value: 'experimental' }
   ]}
 />`,
   },
   {
-    title: 'Validation state',
-    description: 'Pass error to make the invalid state explicit and accessible.',
-    code: `<Select label="Owner team" error="Select a team before publishing." options={teams} />`,
+    title: 'Состояние ошибки',
+    description: 'Ошибка должна подсказать, какой выбор нужен, а не просто остановить пользователя.',
+    code: `<Select label="Команда-владелец" error="Выберите команду перед публикацией." options={teams} />`,
   },
 ];
-

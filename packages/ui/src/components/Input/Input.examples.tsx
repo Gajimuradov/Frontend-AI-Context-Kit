@@ -2,19 +2,18 @@ import type { ComponentExample } from '../../types';
 
 export const inputExamples: ComponentExample[] = [
   {
-    title: 'Basic field',
-    description: 'Use label and description to explain what data the user should enter.',
-    code: `<Input label="Project name" name="projectName" description="Shown in dashboards and docs." />`,
+    title: 'Базовое поле',
+    description: 'Подпись и подсказка снимают лишние вопросы еще до того, как пользователь начнет ввод.',
+    code: `<Input label="Название проекта" name="projectName" description="Показывается в дашбордах и документации." />`,
   },
   {
-    title: 'Validation state',
-    description: 'Pass error to mark the field invalid and replace helper text with feedback.',
-    code: `<Input label="Repository URL" error="Enter a valid GitHub URL." />`,
+    title: 'Состояние ошибки',
+    description: 'Сообщение ошибки должно объяснять, что исправить, а не просто подсвечивать поле.',
+    code: `<Input label="URL репозитория" error="Введите корректный GitHub URL." />`,
   },
   {
-    title: 'Full-width form row',
-    description: 'Use fullWidth when the field sits in a responsive form layout.',
-    code: `<Input fullWidth label="Package name" placeholder="@acme/ui" />`,
+    title: 'Поле на всю ширину',
+    description: 'FullWidth помогает полю аккуратно лечь в форму, где важна ровная сетка.',
+    code: `<Input fullWidth label="Название пакета" placeholder="@acme/ui" />`,
   },
 ];
-

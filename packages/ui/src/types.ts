@@ -7,7 +7,6 @@ export interface ComponentExample {
 export interface ComponentMeta {
   name: string;
   description: string;
-  category: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Surfaces';
+  category: string;
   tags: string[];
 }
-

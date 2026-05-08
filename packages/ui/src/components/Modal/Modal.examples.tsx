@@ -2,24 +2,23 @@ import type { ComponentExample } from '../../types';
 
 export const modalExamples: ComponentExample[] = [
   {
-    title: 'Confirmation dialog',
-    description: 'Use Modal for focused confirmation flows with explicit cancel and confirm actions.',
+    title: 'Подтверждение действия',
+    description: 'Когда действие может повлиять на данные, дайте пользователю спокойно подтвердить выбор.',
     code: `<Modal
   isOpen={isOpen}
-  title="Archive component?"
-  description="This keeps the component documented but hides it from new usage suggestions."
+  title="Архивировать компонент?"
+  description="Компонент останется в документации, но исчезнет из новых рекомендаций."
   onClose={() => setIsOpen(false)}
-  footer={<Button variant="danger">Archive</Button>}
+  footer={<Button variant="danger">Архивировать</Button>}
 >
-  <p>Archived components remain searchable for migration work.</p>
+  <p>Архивные компоненты остаются доступными для миграций.</p>
 </Modal>`,
   },
   {
-    title: 'Form modal',
-    description: 'Pair Modal with Input and Select for short forms that do not need a full page.',
-    code: `<Modal isOpen={isOpen} title="Create token" onClose={closeModal}>
-  <Input fullWidth label="Token name" />
+    title: 'Форма в модальном окне',
+    description: 'Короткую форму можно оставить в модальном окне, если она не превращается в отдельный процесс.',
+    code: `<Modal isOpen={isOpen} title="Создать токен" onClose={closeModal}>
+  <Input fullWidth label="Название токена" />
 </Modal>`,
   },
 ];
-

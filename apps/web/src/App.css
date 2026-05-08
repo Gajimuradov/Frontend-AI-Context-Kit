@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #edf2f7;
+  background: #eef3f8;
   color: #132238;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -18,15 +18,16 @@ select {
 
 .appShell {
   display: grid;
-  gap: 24px;
+  gap: 22px;
   margin: 0 auto;
-  max-width: 1480px;
+  max-width: 1360px;
   min-height: 100vh;
-  padding: 32px;
+  padding: 28px 32px 40px;
+  width: 100%;
 }
 
 .topBar {
-  align-items: end;
+  align-items: flex-end;
   display: flex;
   gap: 24px;
   justify-content: space-between;
@@ -38,7 +39,7 @@ select {
   font-weight: 800;
   letter-spacing: 0;
   margin: 0 0 8px;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 h1 {
@@ -71,7 +72,10 @@ h1 {
   align-items: start;
   display: grid;
   gap: 20px;
-  grid-template-columns: 280px minmax(0, 1fr) 340px;
+  grid-template-areas:
+    'sidebar content'
+    'sidebar context';
+  grid-template-columns: 280px minmax(0, 1fr);
 }
 
 .sidebar,
@@ -79,17 +83,45 @@ h1 {
 .contextPane {
   display: grid;
   gap: 16px;
+  min-width: 0;
 }
 
-.sidebar,
-.contextPane {
+.sidebar {
+  grid-area: sidebar;
   position: sticky;
   top: 24px;
+}
+
+.contentPane {
+  grid-area: content;
+}
+
+.contextPane {
+  grid-area: context;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .componentList {
   display: grid;
   gap: 8px;
+}
+
+.listHeader {
+  align-items: center;
+  color: #44566c;
+  display: flex;
+  font-size: 13px;
+  font-weight: 800;
+  justify-content: space-between;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.listHeader small {
+  color: #6b7f94;
+  font-size: 12px;
+  font-weight: 750;
+  text-transform: none;
 }
 
 .listItem {
@@ -106,6 +138,7 @@ h1 {
 
 .listItem:hover,
 .listItem.active {
+  background: #f9fbff;
   border-color: #2463eb;
   box-shadow: 0 8px 22px rgba(36, 99, 235, 0.12);
 }
@@ -121,6 +154,7 @@ h1 {
 .detailStack {
   display: grid;
   gap: 20px;
+  min-width: 0;
 }
 
 .componentDescription,
@@ -133,7 +167,7 @@ h1 {
 .metaGrid {
   display: grid;
   gap: 8px 16px;
-  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   margin-top: 18px;
 }
 
@@ -151,6 +185,24 @@ code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   font-size: 12px;
   padding: 2px 5px;
+  word-break: break-word;
+}
+
+.metaGrid code {
+  min-width: 0;
+  white-space: normal;
+}
+
+.componentBadge {
+  background: #eef4ff;
+  border: 1px solid #b9cdfa;
+  border-radius: 999px;
+  color: #1e4fc0;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 7px 9px;
 }
 
 .tagRow {
@@ -174,13 +226,34 @@ code {
   background: #ffffff;
   border: 1px solid #d9e2ec;
   border-radius: 8px;
-  overflow: auto;
+  overflow: hidden;
+  width: 100%;
 }
 
 table {
   border-collapse: collapse;
-  min-width: 840px;
+  table-layout: fixed;
   width: 100%;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 18%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 26%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 12%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 14%;
 }
 
 th,
@@ -191,6 +264,7 @@ td {
   padding: 12px;
   text-align: left;
   vertical-align: top;
+  word-break: break-word;
 }
 
 th {
@@ -214,7 +288,7 @@ pre {
   background: #132238;
   border-radius: 8px;
   margin: 14px 0 0;
-  overflow: auto;
+  overflow: hidden;
   padding: 14px;
 }
 
@@ -226,7 +300,9 @@ pre code {
   font-size: 12px;
   line-height: 1.55;
   padding: 0;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .rulesList,
@@ -255,8 +331,20 @@ pre code {
   }
 
   .contextPane {
-    grid-column: 1 / -1;
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .workspace {
+    grid-template-areas:
+      'sidebar'
+      'content'
+      'context';
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
     position: static;
   }
 }
@@ -275,9 +363,4 @@ pre code {
   .contextPane {
     grid-template-columns: 1fr;
   }
-
-  .sidebar {
-    position: static;
-  }
 }
-

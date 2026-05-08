@@ -5,26 +5,26 @@ import { cx } from '../../utils';
 export const cardMeta: ComponentMeta = {
   name: 'Card',
   description:
-    'Contained surface for grouped content, component summaries, metadata, and small dashboards.',
-  category: 'Surfaces',
-  tags: ['surface', 'summary', 'layout', 'content'],
+    'Card собирает связанные данные в понятный блок: summary компонента, небольшой отчет, набор метаданных или карточку результата.',
+  category: 'Поверхности',
+  tags: ['поверхность', 'summary', 'layout', 'контент'],
 };
 
 /**
- * Props for the Card component.
+ * Пропсы компонента Card.
  */
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  /** Optional card title rendered in the header. */
+  /** Заголовок карточки в header. */
   title?: string;
-  /** Optional supporting text below the title. */
+  /** Дополнительный текст под заголовком. */
   subtitle?: string;
-  /** Header action area, typically a button or compact link. */
+  /** Зона действий в header, обычно кнопка или компактная ссылка. */
   actions?: ReactNode;
-  /** Visual treatment of the card container. */
+  /** Визуальный вариант контейнера. */
   variant?: 'outlined' | 'elevated' | 'interactive';
-  /** Inner spacing density. */
+  /** Плотность внутренних отступов. */
   padding?: 'compact' | 'comfortable' | 'spacious';
-  /** Main card content. */
+  /** Основной контент карточки. */
   children: ReactNode;
 }
 
@@ -56,4 +56,3 @@ export function Card({
     </article>
   );
 }
-

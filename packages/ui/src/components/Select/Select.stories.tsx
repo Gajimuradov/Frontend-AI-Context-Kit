@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 
 const options = [
-  { label: 'Stable', value: 'stable' },
-  { label: 'Experimental', value: 'experimental' },
-  { label: 'Deprecated', value: 'deprecated' },
+  { label: 'Стабильный', value: 'stable' },
+  { label: 'Экспериментальный', value: 'experimental' },
+  { label: 'Устаревший', value: 'deprecated' },
 ];
 
 const meta = {
@@ -12,9 +12,9 @@ const meta = {
   component: Select,
   tags: ['autodocs'],
   args: {
-    label: 'Component status',
-    placeholder: 'Choose status',
-    description: 'Used by docs and AI usage suggestions.',
+    label: 'Статус компонента',
+    placeholder: 'Выберите статус',
+    description: 'Используется документацией и AI-рекомендациями.',
     options,
   },
   argTypes: {
@@ -32,7 +32,6 @@ export const Default: Story = {};
 
 export const WithError: Story = {
   args: {
-    error: 'Select a status before publishing.',
+    error: 'Выберите статус перед публикацией.',
   },
 };
-

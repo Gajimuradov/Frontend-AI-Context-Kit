@@ -5,37 +5,37 @@ import { cx } from '../../utils';
 export const selectMeta: ComponentMeta = {
   name: 'Select',
   description:
-    'Native select wrapper for compact choice fields with label, helper copy, and validation state.',
-  category: 'Forms',
-  tags: ['form', 'choice', 'dropdown', 'native'],
+    'Select подходит для короткого выбора из заранее известных вариантов и сохраняет привычное нативное поведение.',
+  category: 'Формы',
+  tags: ['форма', 'выбор', 'выпадающий список', 'native'],
 };
 
 export interface SelectOption {
-  /** User-facing option label. */
+  /** Видимая подпись опции. */
   label: string;
-  /** Submitted option value. */
+  /** Значение опции, которое отправляется в форму. */
   value: string;
-  /** Prevents the option from being selected. */
+  /** Запрещает выбор опции. */
   disabled?: boolean;
 }
 
 /**
- * Props for the Select component.
+ * Пропсы компонента Select.
  */
 export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'children' | 'size'> {
-  /** Human-readable field label. */
+  /** Видимая подпись поля. */
   label?: string;
-  /** Placeholder option shown before a value is selected. */
+  /** Placeholder-опция до выбора значения. */
   placeholder?: string;
-  /** Supporting text shown below the control when there is no error. */
+  /** Подсказка под контролом, если ошибки нет. */
   description?: string;
-  /** Validation message. When present, the select is marked invalid. */
+  /** Сообщение валидации. При наличии select помечается как невалидный. */
   error?: string;
-  /** Available options. Keep labels short and scannable. */
+  /** Доступные опции. Делайте подписи короткими и легко сканируемыми. */
   options: SelectOption[];
-  /** Control height and text sizing. */
+  /** Высота контрола и размер текста. */
   size?: 'sm' | 'md' | 'lg';
-  /** Expands the select wrapper and control to fill the parent width. */
+  /** Растягивает обертку и control на всю ширину родителя. */
   fullWidth?: boolean;
 }
 
@@ -93,4 +93,3 @@ export function Select({
     </label>
   );
 }
-

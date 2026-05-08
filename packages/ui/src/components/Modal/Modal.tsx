@@ -5,30 +5,30 @@ import { cx } from '../../utils';
 export const modalMeta: ComponentMeta = {
   name: 'Modal',
   description:
-    'Dialog surface for focused decisions, short forms, confirmations, and contextual details.',
-  category: 'Overlays',
-  tags: ['dialog', 'overlay', 'confirmation', 'a11y'],
+    'Modal удерживает внимание на одном коротком решении: подтвердить действие, заполнить небольшую форму или посмотреть важные детали.',
+  category: 'Оверлеи',
+  tags: ['диалог', 'оверлей', 'подтверждение', 'доступность'],
 };
 
 /**
- * Props for the Modal component.
+ * Пропсы компонента Modal.
  */
 export interface ModalProps {
-  /** Controls whether the dialog is rendered. */
+  /** Управляет отображением диалога. */
   isOpen: boolean;
-  /** Dialog title announced by assistive technologies. */
+  /** Заголовок диалога, который озвучивают assistive technologies. */
   title: string;
-  /** Optional supporting text shown under the title. */
+  /** Дополнительный текст под заголовком. */
   description?: string;
-  /** Called when the user asks to close the modal. */
+  /** Вызывается, когда пользователь закрывает модальное окно. */
   onClose: () => void;
-  /** Dialog body content. Keep it focused and short. */
+  /** Основное содержимое диалога. Держите его коротким и сфокусированным. */
   children: ReactNode;
-  /** Optional footer actions, usually cancel and confirm buttons. */
+  /** Действия в футере, обычно отмена и подтверждение. */
   footer?: ReactNode;
-  /** Maximum modal width. */
+  /** Максимальная ширина модального окна. */
   size?: 'sm' | 'md' | 'lg';
-  /** Whether clicking the backdrop should call onClose. */
+  /** Нужно ли закрывать окно по клику на backdrop. */
   closeOnBackdrop?: boolean;
 }
 
@@ -76,4 +76,3 @@ export function Modal({
     </div>
   );
 }
-
