@@ -20,6 +20,7 @@ export default [
     ignores: [
       'node_modules',
       '**/dist/**',
+      '**/storybook-static/**',
       'coverage',
       'apps/web/public/component-index.json',
       'apps/mcp-server/data/component-index.json',

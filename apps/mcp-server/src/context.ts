@@ -17,6 +17,34 @@ const fallbackIndex: ComponentIndex = {
   components: [],
 };
 
+const searchAliases: Record<string, string[]> = {
+  form: ['forms', 'форма', 'формы', 'форму', 'форм', 'поле', 'поля'],
+  forms: ['form', 'форма', 'формы', 'форму', 'форм', 'поле', 'поля'],
+  dialog: ['modal', 'диалог', 'диалоги', 'оверлей', 'подтверждение'],
+  modal: ['dialog', 'диалог', 'оверлей', 'подтверждение'],
+  button: ['кнопка', 'действие', 'cta'],
+  input: ['поле', 'текстовое поле', 'ввод', 'форма'],
+  select: ['выбор', 'выпадающий список', 'форма'],
+  card: ['карточка', 'поверхность', 'summary'],
+  tabs: ['вкладки', 'навигация', 'панели'],
+};
+
+function expandSearchTerms(query: string) {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (!normalizedQuery) {
+    return [];
+  }
+
+  const tokens = normalizedQuery.split(/\s+/);
+  const aliases = [
+    ...(searchAliases[normalizedQuery] ?? []),
+    ...tokens.flatMap((token) => searchAliases[token] ?? []),
+  ];
+
+  return Array.from(new Set([normalizedQuery, ...aliases]));
+}
+
 export function loadComponentIndex(indexPath = resolve(__dirname, '../data/component-index.json')) {
   if (!existsSync(indexPath)) {
     return fallbackIndex;
@@ -45,12 +73,13 @@ export function summarizeComponent(component: ComponentIndex['components'][numbe
 }
 
 export function scoreComponent(component: ComponentIndex['components'][number], query: string) {
-  const normalizedQuery = query.trim().toLowerCase();
+  const searchTerms = expandSearchTerms(query);
 
-  if (!normalizedQuery) {
+  if (searchTerms.length === 0) {
     return 1;
   }
 
+  const componentName = component.name.toLowerCase();
   const haystack = [
     component.name,
     component.description,
@@ -61,17 +90,21 @@ export function scoreComponent(component: ComponentIndex['components'][number], 
     .join(' ')
     .toLowerCase();
 
-  if (component.name.toLowerCase() === normalizedQuery) {
+  if (searchTerms.some((term) => componentName === term)) {
     return 100;
   }
 
-  if (component.name.toLowerCase().includes(normalizedQuery)) {
+  if (searchTerms.some((term) => componentName.includes(term))) {
     return 80;
   }
 
-  if (component.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery))) {
+  if (
+    component.tags.some((tag) =>
+      searchTerms.some((term) => tag.toLowerCase().includes(term)),
+    )
+  ) {
     return 60;
   }
 
-  return haystack.includes(normalizedQuery) ? 30 : 0;
+  return searchTerms.some((term) => haystack.includes(term)) ? 30 : 0;
 }
