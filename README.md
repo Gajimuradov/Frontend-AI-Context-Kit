@@ -65,28 +65,6 @@ pnpm lint            # Запустить ESLint
 pnpm generate:index  # Обновить component-index.json для web и MCP
 ```
 
-## Как все связано
-
-1. Компоненты в `packages/ui` описывают публичный API через TypeScript interfaces и JSDoc.
-2. Рядом лежат короткие examples, которые показывают нормальное использование компонента.
-3. `packages/docs-indexer` читает исходники через `ts-morph` и валидирует результат через Zod.
-4. Индекс сохраняется в `apps/web/public` и `apps/mcp-server/data`.
-5. Web app показывает этот индекс человеку.
-6. MCP adapter отдает тот же индекс AI-ассистенту через tools, resources и prompts.
-
-## MCP слой
-
-В `apps/mcp-server` уже есть транспорт-независимая логика:
-
-- `search_components` помогает найти подходящий компонент по задаче.
-- `get_component_api` возвращает props, типы и описания.
-- `get_component_examples` отдает готовые примеры.
-- `get_usage_rules` возвращает правила, которые удерживают AI в рамках UI-библиотеки.
-
-Сейчас это adapter layer без жесткой привязки к конкретной версии SDK. Чтобы подключить настоящий
-MCP transport, добавьте `@modelcontextprotocol/sdk`, создайте entrypoint вроде `src/stdio.ts` и
-зарегистрируйте handlers из `createContextKitServer(loadComponentIndex())`.
-
 ## Компоненты
 
 В демо-библиотеке есть шесть базовых компонентов:
@@ -102,19 +80,12 @@ MCP transport, добавьте `@modelcontextprotocol/sdk`, создайте en
 Storybook stories. Этого достаточно, чтобы показать полный путь от UI-кода до AI-контекста без
 лишнего boilerplate.
 
-## Что обсудить на интервью
+## Куда развивать дальше
 
-- Как превратить компонентную библиотеку в источник AI-контекста.
-- Почему TypeScript и JSDoc удобны как source of truth для component API.
-- Чем MCP tools отличаются от resources и prompts.
-- Как не дать AI-ассистенту изобретать несуществующие props.
-- Как такой подход можно развить во внутреннюю frontend platform.
+Следующие шаги сделали бы проект ближе к production-инструменту:
 
-## Что можно развить дальше
-
-- Подключить настоящий MCP SDK transport и JSON-RPC smoke tests.
-- Парсить Storybook CSF stories напрямую, а не только `*.examples.tsx`.
-- Добавить Vitest для indexer и MCP handlers.
-- Публиковать Storybook и web app из CI.
-- Добавить owner team, stability, accessibility notes и migration status.
-- Подмешать design tokens или Figma metadata в общий AI-контекст.
+- Подключить настоящий MCP SDK transport и проверить JSON-RPC сценарии.
+- Парсить Storybook CSF stories напрямую, а не только ручные `*.examples.tsx`.
+- Добавить тесты для indexer, MCP handlers и поиска компонентов.
+- Добавить поля `owner`, `stability`, `accessibilityNotes` и `deprecated`.
+- Подмешать design tokens или Figma metadata, чтобы AI понимал не только API, но и визуальные правила.
