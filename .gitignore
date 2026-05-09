@@ -8,5 +8,5 @@ coverage
 .env
 .env.local
 .idea
+PROJECT_NOTES.local
 *.tsbuildinfo
-
